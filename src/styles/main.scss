@@ -1,14 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Prosto+One&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@700&display=swap');
+/* font-family: 'Kanit', sans-serif; */
 
 $color-second: #FAFAFA;
 $color-accent: #DB4C3F;
 $color-text-dark: #333;
 $color-text-light: white;
+$color-green: rgb(68, 209, 99);
+$color-itembg-lightgrey: #ddd;
 
 $margin-small: 5px;
 $margin-medium: 15px;
 $item-size: 30px;
+$border-radius: .3rem;
 
+@mixin button-style{
+    transition: background-color .3s ease;
+    padding: $margin-small;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    user-select: none;
+}
+@mixin button-style-hover{
+    transition: background-color .3s ease;
+}
+
+
+/* MISCELLANEOUS */
 
 *{
     color: $color-text-dark;
@@ -25,7 +44,38 @@ h1, h2, h3, h4, h5, h6{
     font-family: 'Prosto One', cursive;
 }
 
+button{
+    @include button-style()
+}
+button:hover{
+    @include button-style-hover()
+}
 
+.close-topright-button{
+    $icon-size: 15px;
+    @include button-style();
+    
+    position: absolute;
+    right: calc(0px - $icon-size);
+    top: calc(0px - $icon-size);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: $icon-size;
+    color: $color-accent;
+    font-weight: 900;
+
+    border: 2px solid $color-accent !important;
+    border-radius: 50% !important;
+    background-color: white;
+}
+.close-topright-button:hover{
+    @include button-style-hover();
+    background-color: #DB4C3F;
+    color: $color-second;
+}
 
 body{
     margin: 0;
@@ -38,6 +88,9 @@ body{
     
 }
 
+
+/* HEADER */
+
 header{
     grid-area: header;
     height: 45px;
@@ -47,7 +100,10 @@ header{
     padding: $margin-medium;
 }
 
-aside{
+
+/* NAV */
+
+nav{
     grid-area: aside;
     background-color: $color-second;
     padding: $margin-medium;
@@ -64,18 +120,16 @@ aside{
     }
 
     li{
-        transition: background-color .3s ease;
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;
         gap: $margin-small;
-        padding: $margin-small;
         font-size: .9rem;
-        border-radius: .3rem;
+        @include button-style();
     }
     li:hover{
-        transition: background-color .3s ease;
-        background-color: #ddd;
+        @include button-style-hover();
+        background-color: $color-itembg-lightgrey;
     }
 }
 
@@ -84,22 +138,132 @@ aside{
     height: calc(100vh - 90px);
     padding: 25px 250px;
     display: grid;
-    grid-template-rows: repeat(2, min-content) auto;
-}
+    grid-auto-rows: min-content;
+    gap: $margin-small;
 
-#tasks-list{
-    border: 1px solid lightgrey;
-    width: 100%;
-    min-height: min-content;
-    padding: $margin-medium;
-    display: grid;
-    grid-template-rows: repeat(auto-fit, minmax(min-content, $item-size));
-    align-items: center;
+    hr{
+        width: 100%;
+        margin: 0;
+    }
 }
 
 #addtask-button{
     display: flex;
+    justify-content: center;
     align-items: center;
+    @include button-style();
+}
+#addtask-button:hover{
+    @include button-style-hover();
+    background-color: $color-green;
+}
+
+#task-form{
+    border: 2px solid $color-accent;
+    border-radius: $border-radius;
+    padding: $margin-medium;
+    
+    position: relative;
+    display: grid;
+    gap: $margin-medium;
+    grid-template-areas:
+        'name name'
+        'description description'
+        'duedate priority'
+        'delete submit';
+
+    input,
+    textarea{
+        width: 100%;
+        border: none;
+        resize: none;
+    }
+    
+    input:focus,
+    textarea:focus{
+        outline: none;
+    }
+
+    label[for="task-name"]{
+        grid-area: name;
+        input{
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+    }
+
+    label[for="task-description"]{
+        grid-area: description;
+    }
+
+    label[for="task-duedate"]{
+        grid-area: duedate;
+        width: min-content;
+        span{
+            color: $color-text-dark;
+        }
+    }
+
+    label[for="priority"]{
+        grid-area: priority;
+    }
+
+    button#task-delete{
+        grid-area: delete;
+    }
+    button#task-delete:hover{
+        background-color: $color-accent;
+    }
+
+    button#task-submit{
+        grid-area: submit;
+    }
+    button#task-submit:hover{
+        background-color: $color-green;
+    }
+}
+
+#tasks-list{
+    width: 100%;
+    min-height: min-content;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(min-content, $item-size));
+    gap: $margin-small;
+    align-items: center;
+
+    .task{
+        @include button-style();
+    }
+    .task:hover{
+        @include button-style-hover();
+        background-color: $color-itembg-lightgrey;
+    }
+
+    #opened{
+        height: 200px;
+        background-color: $color-itembg-lightgrey;
+    }
+}
+
+#fulltask-background{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(51, 51, 51, 0.5);
+
+    #fulltask-container{
+        $self-width: 50%;
+        $self-height: 80%;
+        
+        position: inherit;
+        top: calc(50% - $self-height / 2);
+        left: calc(50% - $self-width / 2);
+        width: $self-width;
+        height: $self-height;
+        background-color: $color-second;
+        border-radius: $border-radius*2;
+        padding: $margin-medium;
+    }
 }
 
 /* FOOTER */

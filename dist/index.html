@@ -12,7 +12,7 @@
     <header>
         <h1>To-Do List</h1>
     </header>
-    <aside>
+    <nav>
         <ul>
             <li>
                 <span class="material-symbols-outlined">inbox</span>
@@ -23,13 +23,40 @@
                 <span>Create a project...</span>
             </li>
         </ul>
-    </aside>
+    </nav>
     <div id="container">
+
         <h2 id="project-name">Inbox</h2>
+        <hr/>
         <div id="addtask-button">
             <span class="material-symbols-outlined">add</span>
             <span>Add a new task</span>
         </div>
+
+        <form id="task-form" style="display: none;">
+            <span id="form-close" class="close-topright-button material-symbols-outlined">close</span>
+            <label for="task-name">
+                <input type="text" id="task-name" placeholder="Task Name" value="" autofocus>
+            </label>
+            <label for="task-description">
+                <textarea placeholder="Description" name="task-description" id="task-description" cols="5" rows="3"></textarea>
+            </label>
+            <label for="task-duedate">
+                <span>Due date</span>
+                <input type="date">
+            </label>
+            <label for="task-priority">
+                <select name="task-priority" id="task-priority">
+                    <option value="priority" selected disabled>-- Priority --</option>
+                    <option value="Low">Low</option>
+                    <option value="Normal">Normal</option>
+                    <option value="High">High</option>
+                </select>
+            </label>
+            <button id="task-delete">Delete</button>
+            <button id="task-submit">Submit</button>
+        </form>
+
         <div id="tasks-list">
             <div class="task">
                 <input type="checkbox">
@@ -43,6 +70,12 @@
                 <input type="checkbox">
                 <span>Task 3</span>
             </div>
+        </div>
+
+    </div>
+    <div id="fulltask-background" style="display: none;">
+        <div id="fulltask-container">
+            <span id="fulltask-close" class="close-topright-button material-symbols-outlined">close</span>
 
         </div>
     </div>
