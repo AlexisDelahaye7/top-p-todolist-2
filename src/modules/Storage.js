@@ -1,3 +1,5 @@
+import { currentProject } from "./UI"
+import { findTask } from "./Tasks"
 let tasksList = [
     [
         'Inbox',
@@ -12,19 +14,21 @@ let tasksList = [
     ],
 ]
 
-const updateLocalStorage = (function(){
+const updateLocalStorage = function(){
     const methods = {}
 
     methods.status = function(taskName, value){
-        // HERE
-        console.log(`${taskName} ${value}`)
+        let thisProjectIndex = findTask(currentProject, taskName).projectIndex()
+        let thisTaskIndex = findTask(currentProject, taskName).taskIndex()
+        console.log(`project index ${thisProjectIndex} + task index ${thisTaskIndex}`)
+
+        tasksList[thisProjectIndex][thisTaskIndex][4] = value
+        setLocalStorage()
     }
-    
     return methods
-})()
+}
 
 function setLocalStorage(){
-    console.log('setLocalStorage')
     return window.localStorage.setItem('tasks2', JSON.stringify(tasksList))
 }
 

@@ -1,12 +1,11 @@
 import {getLocalStorage, tasksList} from "./Storage"
-import closestWithinChildren from "./CustomFunctions"
-import { findProjectDetails, findTaskDetails, thisTask } from "./Tasks"
+import { findTask, thisTask } from "./Tasks"
 
-let currentProject = 'Inbox'
+export let currentProject = 'Inbox'
 
 const loadAllTasksOnUI = (function(){
     getLocalStorage()
-    let thisProjectTasks = findProjectDetails(currentProject)
+    let thisProjectTasks = findTask(currentProject).projectArray()
 
     for(let i = 1; i < thisProjectTasks.length; i++){
         loadUniqueTaskOnUI(thisProjectTasks[i])
@@ -22,7 +21,7 @@ function loadUniqueTaskOnUI(taskArray){
     
     const statusInput = document.createElement('input')
     statusInput.setAttribute('type', 'checkbox')
-    statusInput.addEventListener('click', thisTask().updateStatus)
+    statusInput.addEventListener('click', thisTask.updateStatus)
 
     const nameSpan = document.createElement('span')
     nameSpan.textContent = taskArray[0]
@@ -45,9 +44,10 @@ function fulltaskContent(){
         }
 
         fulltaskBackground.style.display = ''
-        let thisTaskDetails = findTaskDetails(currentProject, clickedTaskNameElement.textContent)
 
+        let thisTaskDetails = findTask(currentProject, clickedTaskNameElement.textContent).taskArray()
         console.log(thisTaskDetails)
+        //add task details to DOM
     }
 
     methods.hide = function(e){
@@ -57,7 +57,7 @@ function fulltaskContent(){
     return methods
 }
 
-const taskForm = (function(){
+export const taskForm = (function(){
     const methods = {}
 
     const taskFormElement = document.getElementById('task-form')
@@ -85,5 +85,3 @@ closeFormButton.addEventListener('click', taskForm.hide)
 
 const closeFulltaskButton = document.querySelector('#fulltask-close')
 closeFulltaskButton.addEventListener('click', fulltaskContent().hide)
-
-export default {taskForm, currentProject}
