@@ -53,30 +53,46 @@
                     <option value="High">High</option>
                 </select>
             </label>
-            <button id="task-delete">Delete</button>
-            <button id="task-submit">Submit</button>
+            <button id="addtask-submit">Submit</button>
         </form>
 
-        <div id="tasks-list">
-            <div class="task">
-                <input type="checkbox">
-                <span>Task 1</span>
-            </div>
-            <div class="task">
-                <input type="checkbox">
-                <span>Task 2</span>
-            </div>
-            <div class="task">
-                <input type="checkbox">
-                <span>Task 3</span>
-            </div>
-        </div>
+        <div id="tasks-list"></div>
 
     </div>
     <div id="fulltask-background" style="display: none;">
         <div id="fulltask-container">
             <span id="fulltask-close" class="close-topright-button material-symbols-outlined">close</span>
+            
+            <div id="fulltask-content">
+                <span id="fulltask-project">Project name</span>
+                <hr/>
+                    <input id="fulltask-name" type="text" placeholder="Task Name...">
+                    <textarea id="fulltask-description" placeholder="Description..." ></textarea>
 
+                    <div id="fulltask-misc">
+
+                        <label for="fulltask-duedate" id="fulltask-duedate-label">
+                            <span>Due date</span>
+                            <input id="fulltask-duedate" type="date" value="1997-03-03">
+                        </label>
+
+                        <label for="fulltask-priority" id="fulltask-priority-label">
+                            <span>Priority</span>
+                            <select name="task-priority" id="fulltask-priority" >
+                                <option value="Low">Low</option>
+                                <option value="Normal">Normal</option>
+                                <option value="High">High</option>
+                            </select>
+                        </label>
+                        
+                    </div>
+                    
+                    <div id="fulltask-buttons">
+                        <button id="fulltask-delete">Delete</button>
+                        <button id="fulltask-save">Save</button>
+                    </div>
+
+            </div>
         </div>
     </div>
     <footer>A project by AlexMrsh on GitHub</footer>

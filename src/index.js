@@ -1,2 +1,4 @@
 import './styles/main.scss'
-import taskForm from './modules/UI'
+import {taskForm, loadAllTasksOnUI} from './modules/UI'
+
+loadAllTasksOnUI()

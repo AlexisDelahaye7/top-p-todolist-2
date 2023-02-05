@@ -1,16 +1,18 @@
-import { currentProject } from "./UI"
+import { currentProject, loadAllTasksOnUI } from "./UI"
 import { findTask } from "./Tasks"
+
 let tasksList = [
     [
         'Inbox',
-        ['Task One homepage', 'description', 'date', 'priority', 'status'],
-        ['Task Two homepage', 'description', 'date', 'priority', 'status'],
-        ['Task Three homepage', 'description', 'date', 'priority', 'status']
+        ['Good Task', 'This is a short description of the task', '2023-03-09', 'Normal', true],
+        ['Task One homepage', 'description', '2023-03-09', 'priority', 'status'],
+        ['Task Two homepage', 'description', '2023-03-09', 'priority', 'status'],
+        ['Task Three homepage', 'description', '2023-03-09', 'priority', 'status']
     ],
     [
-        'Custom project',
-        ['Task One custom', 'description', 'date', 'priority', 'status'],
-        ['Task Two custom', 'description', 'date', 'priority', 'status']
+        'Custom',
+        ['Task One custom', 'description', '2023-03-09', 'priority', 'status'],
+        ['Task Two custom', 'description', '2023-03-09', 'priority', 'status']
     ],
 ]
 
@@ -25,6 +27,19 @@ const updateLocalStorage = function(){
         tasksList[thisProjectIndex][thisTaskIndex][4] = value
         setLocalStorage()
     }
+
+    methods.uniqueTask = function(project, initialTask, task, description, duedate, priority, value){
+        let projectIndex = findTask(project).projectIndex()
+        let taskIndex = findTask(project, initialTask).taskIndex()
+        if(value === undefined) value = tasksList[projectIndex][taskIndex][4]
+
+        tasksList[projectIndex][taskIndex] = [task, description, duedate, priority, value]
+        console.log(tasksList[projectIndex][taskIndex])
+        setLocalStorage()
+        loadAllTasksOnUI()
+        
+    }
+
     return methods
 }
 

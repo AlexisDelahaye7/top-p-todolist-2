@@ -3,17 +3,24 @@ import { findTask, thisTask } from "./Tasks"
 
 export let currentProject = 'Inbox'
 
-const loadAllTasksOnUI = (function(){
+const tasksListDOM = document.querySelector('#tasks-list')
+
+
+export const loadAllTasksOnUI = function(){
+    const currentProjectDOM = document.querySelector('#project-name')
+    currentProjectDOM.textContent = currentProject
+    
+    tasksListDOM.innerHTML = ''
     getLocalStorage()
+
     let thisProjectTasks = findTask(currentProject).projectArray()
 
     for(let i = 1; i < thisProjectTasks.length; i++){
         loadUniqueTaskOnUI(thisProjectTasks[i])
     }
-})()
+}
 
 function loadUniqueTaskOnUI(taskArray){
-    const tasksListDOM = document.querySelector('#tasks-list')
     
     const taskDiv = document.createElement('div')
     taskDiv.classList.add('task')
@@ -31,11 +38,13 @@ function loadUniqueTaskOnUI(taskArray){
     taskDiv.appendChild(nameSpan)
 }
 
-function fulltaskContent(){
+export function fulltaskContent(){
     const methods = {}
 
     const fulltaskBackground = document.querySelector('#fulltask-background')
-    
+    const fullstaskContent = document.querySelector('#fulltask-content')
+
+
     methods.show = function(e){
         if(e.target.tagName === 'INPUT') return
         let clickedTaskNameElement = e.target.closest('span')
@@ -46,13 +55,27 @@ function fulltaskContent(){
         fulltaskBackground.style.display = ''
 
         let thisTaskDetails = findTask(currentProject, clickedTaskNameElement.textContent).taskArray()
-        console.log(thisTaskDetails)
-        //add task details to DOM
+        
+        //Initialize fulltask 'form'
+        fulltaskProject.textContent = currentProject
+        fulltaskName.value = thisTaskDetails[0]
+        fulltaskDescription.value = thisTaskDetails[1]
+        fulltaskDuedate.value = thisTaskDetails[2]
+        fulltaskPriority.value = thisTaskDetails[3]
+
+        fulltaskName.dataset.initialname = fulltaskName.value
     }
 
     methods.hide = function(e){
         fulltaskBackground.style.display = 'none'
+        fulltaskProject.textContent = ''
+        fulltaskName.value = ''
+        fulltaskDescription.value = ''
+        fulltaskDuedate.value = ''
+        fulltaskPriority.value = ''
     }
+
+
 
     return methods
 }
@@ -71,17 +94,39 @@ export const taskForm = (function(){
         addtaskButton.style.display = ''
         taskFormElement.style.display = 'none'
     }
+
+    methods.create = function(e){
+        e.preventDefault()
+    }
     
 
     return methods
 })()
 
 
-const addtaskButton = document.querySelector('#addtask-button')
-addtaskButton.addEventListener('click', taskForm.show)
+/* Fulltask form */
 
-const closeFormButton = document.querySelector('#form-close')
-closeFormButton.addEventListener('click', taskForm.hide)
-
+const fulltaskProject = document.querySelector('#fulltask-project')
+const fulltaskName = document.querySelector('#fulltask-name')
+const fulltaskDescription = document.querySelector('#fulltask-description')
+const fulltaskDuedate = document.querySelector('#fulltask-duedate')
+const fulltaskPriority = document.querySelector('#fulltask-priority')
 const closeFulltaskButton = document.querySelector('#fulltask-close')
 closeFulltaskButton.addEventListener('click', fulltaskContent().hide)
+
+/* Addtask form */
+
+const addtaskButton = document.querySelector('#addtask-button')
+addtaskButton.addEventListener('click', taskForm.show)
+const closeFormButton = document.querySelector('#form-close')
+closeFormButton.addEventListener('click', taskForm.hide)
+const addtaskSubmit = document.querySelector('#addtask-submit')
+addtaskSubmit.addEventListener('click', taskForm.create)
+
+
+//AFTER
+const fulltaskDelete = document.querySelector('#fulltask-delete')
+
+
+const fulltaskSave = document.querySelector('#fulltask-save')
+fulltaskSave.addEventListener('click', () => {thisTask.updateValues(fulltaskProject.textContent, fulltaskName.dataset.initialname, fulltaskName.value, fulltaskDescription.value, fulltaskDuedate.value, fulltaskPriority.value)})

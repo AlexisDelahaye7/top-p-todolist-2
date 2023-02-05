@@ -1,4 +1,5 @@
 import { tasksList, updateLocalStorage } from "./Storage"
+import { fulltaskContent } from "./UI";
 
 
 /* Fonction globale de recherche dans tasksList */
@@ -44,8 +45,6 @@ function findTask(project, task) {
 
 /* Fonction globale de recheche dans tasksList */
 
-  //A IMPLEMENTER
-
 export function findTask(project, task) {
     const projectArray = tasksList.find(([p]) => p === project);
     const projectIndex = tasksList.indexOf(projectArray);
@@ -81,6 +80,12 @@ const thisTask = (function(){
         let taskElement = e.target.closest('.task')
         let nameElement = Array.from(taskElement.children).find(child => child.tagName === "SPAN")
         return nameElement.textContent
+    }
+
+    methods.updateValues = function(project, task, description, duedate, priority){
+      updateLocalStorage().uniqueTask(project, task, description, duedate, priority)
+      
+      fulltaskContent().hide()
     }
 
     return methods

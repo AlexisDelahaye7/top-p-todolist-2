@@ -158,6 +158,8 @@ nav{
     background-color: $color-green;
 }
 
+/* Addtask form */
+
 #task-form{
     border: 2px solid $color-accent;
     border-radius: $border-radius;
@@ -170,7 +172,7 @@ nav{
         'name name'
         'description description'
         'duedate priority'
-        'delete submit';
+        'submit submit';
 
     input,
     textarea{
@@ -208,20 +210,16 @@ nav{
         grid-area: priority;
     }
 
-    button#task-delete{
-        grid-area: delete;
-    }
-    button#task-delete:hover{
-        background-color: $color-accent;
-    }
-
-    button#task-submit{
+    button#addtask-submit{
         grid-area: submit;
     }
-    button#task-submit:hover{
+    button#addtask-submit:hover{
         background-color: $color-green;
     }
 }
+
+
+/* Existing tasks list */
 
 #tasks-list{
     width: 100%;
@@ -245,6 +243,9 @@ nav{
     }
 }
 
+
+/* Fulltask form */
+
 #fulltask-background{
     position: absolute;
     height: 100vh;
@@ -253,7 +254,7 @@ nav{
 
     #fulltask-container{
         $self-width: 50%;
-        $self-height: 80%;
+        $self-height: 50%;
         
         position: inherit;
         top: calc(50% - $self-height / 2);
@@ -263,6 +264,116 @@ nav{
         background-color: $color-second;
         border-radius: $border-radius*2;
         padding: $margin-medium;
+    }
+}
+
+#fulltask-content{
+    display: grid;
+    grid-template-rows: repeat(3, min-content) 1fr repeat(2, min-content);
+    gap: $margin-medium;
+    min-height: 100%;
+    
+    #fulltask-project{
+        text-transform: uppercase;
+        font-family: 'Prosto One', cursive;
+        margin: 0;
+        color: rgba(51, 51, 51, .6);
+        text-align: center;
+    }
+
+    hr{
+        width: 100%;
+        margin: 0;
+    }
+
+    #fulltask-name{
+        transition: outline .3s ease;
+        outline: 2px solid #33333300;
+        border-radius: $border-radius;
+
+        padding: $margin-small;
+        font-size: 1.5rem;
+        font-weight: 900;
+        font-family: 'Prosto One', cursive;
+    }
+    #fulltask-description{
+        transition: outline .3s ease;
+        outline: 2px solid #33333300;
+        border-radius: $border-radius;
+
+        padding: $margin-small;
+    }
+    #fulltask-name:hover,
+    #fulltask-description:hover{
+        // the transition is sketchy here, the outline grow 1px at a time
+        transition: outline .3s ease;
+        outline: 2px solid $color-text-dark;
+        border-radius: $border-radius;
+    }
+
+
+
+    #fulltask-misc{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        align-items: center;
+
+        height: 100px;
+        
+        #fulltask-duedate-label,
+        #fulltask-priority-label{
+            transition: border .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            height: 70px;
+            width: 150px;
+            padding: $margin-medium;
+            border: 2px solid $color-itembg-lightgrey;
+            border-radius: $border-radius;
+
+            input{
+                margin-top: $margin-small;
+                width: 100%;
+            }
+            select{
+                margin-top: $margin-small;
+                width: 100%;
+            }
+        }
+        #fulltask-duedate-label:hover,
+        #fulltask-priority-label:hover{
+            transition: border .3s ease;
+            border: 2px solid black;
+        }
+    }
+
+    #fulltask-buttons{
+        width: 100%;
+        height: 60px;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        gap: $margin-medium;
+
+        #fulltask-delete:hover{
+            background-color: $color-accent;
+        }
+        #fulltask-save:hover{
+            background-color: $color-green;
+        }
+        
+    }
+
+    /* misc */
+    input,
+    textarea{
+        resize: none;
+        border: none;
+        outline: none;
+        background-color: #33333300;
+        width: 100%;
     }
 }
 
