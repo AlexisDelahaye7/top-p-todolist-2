@@ -18,7 +18,9 @@ export const project = function(e){
     }
 
     methods.openForm = function(e){
+
         createProjectButton.style.backgroundColor = '#ddd'
+        createProjectButton.classList.add('li-with-gap')
         createProjectClose.style.display = ''
         createProjectInput.style.display = ''
         createProjectSubmit.style.display = ''
@@ -27,6 +29,7 @@ export const project = function(e){
     methods.closeForm = function(e){
         e.stopPropagation()
         createProjectButton.style.backgroundColor = ''
+        createProjectButton.classList.remove('li-with-gap')
         createProjectClose.style.display = 'none'
         createProjectInput.value = ''
         createProjectInput.style.display = 'none'
@@ -35,11 +38,11 @@ export const project = function(e){
 
     methods.submitForm = function(e){
         e.stopPropagation()
-        if(createProjectInput.value === '') return
+        if(createProjectInput.value === '') return window.alert('choose a project name')
         for(let i = 0; i < tasksList.length; i++){
             if(createProjectInput.value === tasksList[i][0]){
                 createProjectInput.value = ''
-                return window.alert('task name non-available')
+                return window.alert('project name non-available')
             }
         }
         updateLocalStorage().createProject(createProjectInput.value)

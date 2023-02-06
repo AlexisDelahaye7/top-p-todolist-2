@@ -119,14 +119,21 @@ nav{
         gap: $margin-small;
     }
 
+    li#create-project-button{
+        margin-top: $margin-small;
+    }
+    
     li{
         display: grid;
         grid-template: auto auto auto / auto 1fr;
         align-items: center;
-        gap: $margin-small;
         font-size: .9rem;
+        grid-column-gap: $margin-small;
         @include button-style();
         position: relative;
+    }
+    .li-with-gap{
+        grid-row-gap: $margin-small;
     }
     li:hover{
         @include button-style-hover();
