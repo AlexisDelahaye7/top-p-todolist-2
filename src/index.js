@@ -1,4 +1,5 @@
 import './styles/main.scss'
-import {taskForm, loadAllTasksOnUI} from './modules/UI'
+import {taskForm, loadAllTasksOnUI, loadProjectsInNav} from './modules/UI'
 
 loadAllTasksOnUI()
+loadProjectsInNav()

@@ -13,20 +13,21 @@
         <h1>To-Do List</h1>
     </header>
     <nav>
+        <ul id="projects-list">
+        </ul>
         <ul>
-            <li>
-                <span class="material-symbols-outlined">inbox</span>
-                <span>Inbox</span>
-            </li>
-            <li>
+            <li id="create-project-button">
+                <span id="create-project-close" class="close-topright-button material-symbols-outlined" style="display: none;">close</span>
                 <span class="material-symbols-outlined">add</span>
-                <span>Create a project...</span>
-            </li>
+                <span id="create-project-text">Create a project...</span>
+                <input id="create-project-input" type="text" placeholder="Project name..." style="display: none;"> 
+                <button id="create-project-submit" style="display: none;">Create</button>
+            </li>        
         </ul>
     </nav>
     <div id="container">
 
-        <h2 id="project-name">Inbox</h2>
+        <h2 id="current-project-name">Inbox</h2>
         <hr/>
         <div id="addtask-button">
             <span class="material-symbols-outlined">add</span>
@@ -43,7 +44,7 @@
             </label>
             <label for="task-duedate">
                 <span>Due date</span>
-                <input type="date">
+                <input id="task-duedate" type="date">
             </label>
             <label for="task-priority">
                 <select name="task-priority" id="task-priority">

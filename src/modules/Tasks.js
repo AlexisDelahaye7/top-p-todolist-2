@@ -82,12 +82,6 @@ const thisTask = (function(){
         return nameElement.textContent
     }
 
-    methods.updateValues = function(project, task, description, duedate, priority){
-      updateLocalStorage().uniqueTask(project, task, description, duedate, priority)
-      
-      fulltaskContent().hide()
-    }
-
     return methods
 })()
 
